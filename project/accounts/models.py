@@ -36,6 +36,7 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.description
+        
 
 class ShopCart(models.Model):
     user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
