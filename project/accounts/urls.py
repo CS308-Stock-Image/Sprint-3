@@ -27,8 +27,11 @@ urlpatterns = [
 	path('shopcart',views.shopcart,name='shopcart'),
 	path('deletecart/<int:id>',views.deletecart, name='deletecart'),
 
-	
-	path('checkout',views.checkout,name="checkout"),
+
+	path('checkout/get',views.get,name="checkout/get"),
+	path('checkout/post',views.post,name="checkout/post"),
+
+	path('success/', views.success, name="success"),
 
      
 
