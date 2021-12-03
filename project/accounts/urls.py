@@ -26,6 +26,8 @@ urlpatterns = [
 	path('addtoshopcart/<int:id>/',views.addtoshopcart,name='addtoshopcart'),
 	path('shopcart',views.shopcart,name='shopcart'),
 	path('deletecart/<int:id>',views.deletecart, name='deletecart'),
+
+	
 	path('checkout',views.checkout,name="checkout"),
 
      

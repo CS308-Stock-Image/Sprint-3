@@ -14,10 +14,14 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import *
 from .forms import  CreateUserForm
+
+
 def home(request):
 	photos =Photo.objects.all()
 	context={'photos':photos}
 	return render(request, 'accounts/main.html',context)
+
+
 def registerPage(request):
 	if request.user.is_authenticated:
 		return redirect('home')
@@ -140,7 +144,6 @@ def shopcart(request):
     
 
 def addtoshopcart(request,id):
-  
 
     current_user=request.user
     data=ShopCart(id=id)
