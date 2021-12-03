@@ -13,11 +13,15 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .models import *
-from .forms import  CreateUserForm
+from .forms import  *
+
+
 def home(request):
 	photos =Photo.objects.all()
 	context={'photos':photos}
 	return render(request, 'accounts/main.html',context)
+
+
 def registerPage(request):
 	if request.user.is_authenticated:
 		return redirect('home')
@@ -113,10 +117,13 @@ def addPhoto(request):
     context = {'categories': categories}
     return render(request, 'accounts/photos/add.html', context)
 
-def deletePhoto(request,pk):
-    photo=Photo.objects.get(id=pk)
+def deletePhoto(request, id):
+    photo=Photo.objects.get(id=id)
     photo.delete()
-    return redirect('home')
+    return redirect(request,'home')
+
+
+########            SORTING             ##########
 
 def sortByCategory(request):
    photos =Photo.objects.all().order_by('category_name')
@@ -133,6 +140,10 @@ def sortByDecreasingPrice(request):
    context={'photos':photos}
    return render(request, 'accounts/main.html',context)
 
+
+
+########            SHOPPING CART           #########
+
 def shopcart(request):
     image=ShopCart.objects.filter()
     context= {"image":image}
@@ -140,7 +151,6 @@ def shopcart(request):
     
 
 def addtoshopcart(request,id):
-  
 
     current_user=request.user
     data=ShopCart(id=id)
@@ -162,6 +172,50 @@ def deletecart(request,id):
     cart.delete()
     return redirect('shopcart')
 
-def checkout(request):
-    return render(request,"accounts/checkout.html")
 
+
+#######         CHECKOUT            ########
+
+def success(request):
+    return render(request,"accounts/success.html")
+
+
+def get(request):
+        form = CheckoutForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'accounts/checkout.html', context)
+
+def post(request):
+        form = CheckoutForm(request.POST or None)
+
+        try:
+            order = ShopCart.objects.get(user=request.user, ordered=False)
+            if form.is_valid():
+                street_address = form.cleaned_data.get('street_address')
+                apartment_address = form.cleaned_data.get('apartment_address')
+                country = form.cleaned_data.get('country')
+                zip = form.cleaned_data.get('zip')
+                same_billing_address = form.cleaned_data.get('same_billing_address')            ####
+                save_info = form.cleaned_data.get('save_info')                                  ####
+                payment_option = form.cleaned_data.get('payment_option')                        ####
+
+                checkout_address = CheckoutAddress(
+                    user=request.user,
+                    street_address=street_address,
+                    apartment_address=apartment_address,
+                    country=country,
+                    zip=zip
+                )
+
+                checkout_address.save()
+                order.checkout_address = checkout_address
+                order.save()
+                return redirect('account/checkout.html')
+            messages.warning(request, 'Fail checkout')
+            return redirect('account/checkout.html')
+
+        except:
+            messages.error(request, 'You do not have an order')
+            return redirect('accounts/gallery.html')

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'likert_field',
+    'django_countries',
 ]
 
 MIDDLEWARE = [

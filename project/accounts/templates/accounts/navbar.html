@@ -25,21 +25,23 @@
         <a class="nav-link" href="{% url 'home' %}">SIProject</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Products</a>
+        <a class="nav-link" href="{% url 'home' %}">Products</a>
       </li>
+      
     </ul>
   </div>
   {% if user.is_authenticated %}
 
 
-  <span><a href="{% url 'add' %}" class="btn btn-dark btn-block btn-sm m-1">Add Photo</a></span>
-  <span><a class="btn signup"href="{% url 'shopcart' %}">Cart</a></span>
-  <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+  <span><a class="nav-link"  href="{% url 'add' %}"> Add Photo</a></span>
+  <span><a class="nav-link"  href="{% url 'shopcart' %}"> Cart</a></span>
+  <span><a class="nav-link" href="{% url 'logout' %}"> Logout</a></span>
+
+
   {% else %}
       
-  
-          <span><a class="btn signup"href="/register">SignUp</a></span>
-          <span><a class= "btn signup"href="/login">SignIn</a></span>
+  <span><a class="btn signup"  href="/register"> Register</a></span>
+  <span><a class= "btn signup" href="/login"> Login</a></span>
         
        
   {% endif %}
