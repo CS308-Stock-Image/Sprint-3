@@ -30,6 +30,7 @@ class Photo(models.Model):
     image = models.ImageField(null=False, blank=False)
     description = models.TextField()
     price= models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    uploaded_by=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
     
     
     
@@ -49,3 +50,6 @@ class ShopCart(models.Model):
     def price(self):
         return(self.product.price)
     
+class Seller(models.Model):
+    user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    isseller= models.BooleanField(default=False)

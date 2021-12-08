@@ -28,6 +28,8 @@ urlpatterns = [
 	path('deletecart/<int:id>',views.deletecart, name='deletecart'),
 	path('checkout',views.checkout,name="checkout"),
 
+	path('seller',views.seller,name="seller"),
+    path('profile',views.profile,name='profile'),
      
 
 ]

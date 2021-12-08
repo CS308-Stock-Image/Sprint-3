@@ -29,10 +29,11 @@
       </li>
     </ul>
   </div>
-  {% if user.is_authenticated %}
-
-
+  {% if user.is_authenticated  %}
+  <span ><a href="{% url 'seller'%}"  class="btn btn-dark btn-block btn-sm m-1"> Become a Seller</a></span>
+  {%if user1.isseller%}
   <span><a href="{% url 'add' %}" class="btn btn-dark btn-block btn-sm m-1">Add Photo</a></span>
+  {%endif%}
   <span><a class="btn signup"href="{% url 'shopcart' %}">Cart</a></span>
   <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
   {% else %}

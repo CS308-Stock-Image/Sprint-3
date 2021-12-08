@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
 from .forms import *
-import os
 from django.contrib.auth.decorators import login_required
 
 
@@ -106,6 +105,7 @@ def addPhoto(request):
                 description=data['description'],
                 image=image,
                 price=data['price'],
+                uploaded_by=user
             )
 
         return redirect('gallery')
@@ -165,3 +165,15 @@ def deletecart(request,id):
 def checkout(request):
     return render(request,"accounts/checkout.html")
 
+def seller(request):
+    user= Seller()
+    user.user= request.user
+    user.user_id= user.user.id
+    user.isseller=True
+    user.save()
+    photo = Photo.objects.all()
+    return render(request,"accounts/main.html",{'user1':user,'photos':photo})
+
+def profile(request):
+  
+    return render(request,"accounts/profile.html")
