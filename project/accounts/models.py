@@ -52,11 +52,11 @@ class ShopCart(models.Model):
     def price(self):
         return(self.product.price)
     
-<<<<<<< HEAD
+
 class Seller(models.Model):
     user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
     isseller= models.BooleanField(default=False)
-=======
+
 
 class CheckoutAddress(models.Model):
     item = models.ForeignKey(Photo,on_delete=models.SET_NULL,null=True)
@@ -68,4 +68,4 @@ class CheckoutAddress(models.Model):
 
     def __str__(self):
         return self.user.username
->>>>>>> 185575d8f5883c74604f498353fd8bad83ce2fa1
+

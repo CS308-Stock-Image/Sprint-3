@@ -173,7 +173,6 @@ def deletecart(request,id):
     return redirect('shopcart')
 
 
-<<<<<<< HEAD
 def seller(request):
     user= Seller()
     user.user= request.user
@@ -186,7 +185,6 @@ def seller(request):
 def profile(request):
   
     return render(request,"accounts/profile.html")
-=======
 
 #######         CHECKOUT            ########
 
@@ -233,4 +231,3 @@ def post(request):
         except:
             messages.error(request, 'You do not have an order')
             return redirect('accounts/gallery.html')
->>>>>>> 185575d8f5883c74604f498353fd8bad83ce2fa1
