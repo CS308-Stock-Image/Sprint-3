@@ -25,10 +25,12 @@
         <a class="nav-link" href="{% url 'home' %}">SIProject</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Products</a>
+        <a class="nav-link" href="{% url 'home' %}">Products</a>
       </li>
+      
     </ul>
   </div>
+<<<<<<< HEAD
   {% if user.is_authenticated  %}
   <span ><a href="{% url 'seller'%}"  class="btn btn-dark btn-block btn-sm m-1"> Become a Seller</a></span>
   {%if user1.isseller%}
@@ -36,11 +38,20 @@
   {%endif%}
   <span><a class="btn signup"href="{% url 'shopcart' %}">Cart</a></span>
   <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+=======
+  {% if user.is_authenticated %}
+
+
+  <span><a class="nav-link"  href="{% url 'add' %}"> Add Photo</a></span>
+  <span><a class="nav-link"  href="{% url 'shopcart' %}"> Cart</a></span>
+  <span><a class="nav-link" href="{% url 'logout' %}"> Logout</a></span>
+
+
+>>>>>>> 185575d8f5883c74604f498353fd8bad83ce2fa1
   {% else %}
       
-  
-          <span><a class="btn signup"href="/register">SignUp</a></span>
-          <span><a class= "btn signup"href="/login">SignIn</a></span>
+  <span><a class="btn signup"  href="/register"> Register</a></span>
+  <span><a class= "btn signup" href="/login"> Login</a></span>
         
        
   {% endif %}

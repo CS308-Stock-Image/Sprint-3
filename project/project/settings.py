@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+<<<<<<< HEAD
     
+=======
+    'likert_field',
+    'django_countries',
+>>>>>>> 185575d8f5883c74604f498353fd8bad83ce2fa1
 ]
 
 MIDDLEWARE = [
