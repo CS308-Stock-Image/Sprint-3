@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
-from likert_field.models import LikertField
 
 
 # Create your models here.
@@ -53,9 +52,6 @@ class ShopCart(models.Model):
         return(self.product.price)
     
 
-class Seller(models.Model):
-    user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
-    isseller= models.BooleanField(default=False)
 
 
 class CheckoutAddress(models.Model):

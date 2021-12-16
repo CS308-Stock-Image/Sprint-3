@@ -16,28 +16,28 @@ from .forms import  *
 
 
 def home(request):
-	photos =Photo.objects.all()
-	context={'photos':photos}
-	return render(request, 'accounts/main.html',context)
+    user=request.user
+    userid=user.id
+    photos =Photo.objects.all()
+    context={'photos':photos,'userid':userid}
+    return render(request, 'accounts/main.html',context)
+    
 
 
 def registerPage(request):
-	if request.user.is_authenticated:
-		return redirect('home')
-	else:
-		form = CreateUserForm()
-		if request.method == 'POST':
-			form = CreateUserForm(request.POST)
-			if form.is_valid():
-				form.save()
-				user = form.cleaned_data.get('username')
-				messages.success(request, 'Account was created for ' + user)
-                
-
-				return redirect('login')
-
-		context = {'form':form}
-		return render(request, 'accounts/register.html', context)
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Account was created for ' + user)
+                return redirect('login')
+        context = {'form':form}
+        return render(request, 'accounts/register.html', context)
 
 def loginPage(request):
 	if request.user.is_authenticated:
@@ -46,7 +46,7 @@ def loginPage(request):
 		if request.method == 'POST':
 			username = request.POST.get('username')
 			password =request.POST.get('password')
-
+    
 			user = authenticate(request, username=username, password=password)
 
 			if user is not None:
@@ -112,15 +112,16 @@ def addPhoto(request):
                 uploaded_by=user
             )
 
-        return redirect('gallery')
+        return redirect('home')
 
     context = {'categories': categories}
     return render(request, 'accounts/photos/add.html', context)
 
 def deletePhoto(request, id):
+    user=request.user
     photo=Photo.objects.get(id=id)
     photo.delete()
-    return redirect(request,'home')
+    return redirect('/home')
 
 
 ########            SORTING             ##########
@@ -174,17 +175,17 @@ def deletecart(request,id):
 
 
 def seller(request):
-    user= Seller()
-    user.user= request.user
-    user.user_id= user.user.id
-    user.isseller=True
+    user=request.user
+    user.is_staff=True
     user.save()
     photo = Photo.objects.all()
     return render(request,"accounts/main.html",{'user1':user,'photos':photo})
 
 def profile(request):
-  
-    return render(request,"accounts/profile.html")
+    photo= Photo.objects.all()
+    return render(request,"accounts/profile.html",{'photos':photo})
+
+
 
 #######         CHECKOUT            ########
 
