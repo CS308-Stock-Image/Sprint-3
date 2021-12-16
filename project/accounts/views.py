@@ -185,6 +185,13 @@ def profile(request):
     photo= Photo.objects.all()
     return render(request,"accounts/profile.html",{'photos':photo})
 
+def uploadedphotos(request):
+    user=request.user
+    userid=user.id
+
+    photo=Photo.objects.filter(uploaded_by_id=userid)
+    return render(request,"accounts/photos/uploadedphotos.html",{'photos':photo})
+
 
 
 #######         CHECKOUT            ########

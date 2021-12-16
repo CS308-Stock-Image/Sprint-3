@@ -34,7 +34,11 @@ urlpatterns = [
 	path('success/', views.success, name="success"),
 
 	path('seller',views.seller,name="seller"),
+
     path('profile',views.profile,name='profile'),
+
+	path('uploadedphotos',views.uploadedphotos,name='uploadedphotos'),
+
      
 
 ]
