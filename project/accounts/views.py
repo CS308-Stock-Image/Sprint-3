@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect 
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -192,7 +193,24 @@ def uploadedphotos(request):
     photo=Photo.objects.filter(uploaded_by_id=userid)
     return render(request,"accounts/photos/uploadedphotos.html",{'photos':photo})
 
+def profile2(request):
+    seller= User.objects.get(is_staff=True)
 
+def favorite_photo(request,id):
+    photo= get_object_or_404(Photo,id=id)
+    if photo.favorite.filter(id=request.user.id).exists():
+        photo.favorite.remove(request.user)
+    else:
+        photo.favorite.add(request.user)
+    return HttpResponse('Added to Favorites')
+
+
+
+def photo_favorite_list(request):
+    user=request.user
+    favorite_photos=user.favorite.all()
+    context={'favorite_photos':favorite_photos}
+    return render(request,'accounts/favorites.html',context)
 
 #######         CHECKOUT            ########
 

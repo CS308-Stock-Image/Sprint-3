@@ -29,16 +29,12 @@
                         </div>
                         <div class="aside">
                         <ul class="list-links">
+                            
                             <tr>
-                                {%if user.is_staff%}
-                                <td class="text-left"><a href="/uploadedphotos">Uploaded Photos</a></td>
-                                {%endif%}
+                                <td class="text-left"><a href>Uploaded Photos</a></td>
                             </tr>
                             <tr>
-                                <td class="text-left"><a href>Purchased Photos</a></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left"><a href='/photo_favorite_list'>Favorites</a></td>
+                                <td class="text-left"><a href>Favorites</a></td>
                             </tr>
                             <tr>
                                 <td class="text-left"><a href>Following</a></td>
@@ -57,11 +53,11 @@
                      <table class="shopping-cart-table table">
                         <tr>
                             <th class="text-left">Username</th>
-                            <td class="text-left">{{ user.username}} </td>
+                            <td class="text-left">{{ user1.username}} </td>
                         </tr>
                         <tr>
                             <th class="text-left">Email</th>
-                            <td class="text-left">{{ user.email}}</td>
+                            <td class="text-left">{{ user1.email}}</td>
                         </tr>
                         
 

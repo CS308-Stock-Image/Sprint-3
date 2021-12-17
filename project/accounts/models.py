@@ -31,6 +31,7 @@ class Photo(models.Model):
     description = models.TextField()
     price= models.DecimalField(max_digits=5, decimal_places=2, default=0)
     uploaded_by=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    favorite=models.ManyToManyField(User,related_name='favorite', blank=True )
     
     
     
