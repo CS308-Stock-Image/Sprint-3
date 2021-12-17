@@ -36,8 +36,11 @@ urlpatterns = [
 	path('seller',views.seller,name="seller"),
 
     path('profile',views.profile,name='profile'),
+	path('profile2/<str:username>/',views.profile2,name='profile2'),
 
 	path('uploadedphotos',views.uploadedphotos,name='uploadedphotos'),
+	path('uploadedphotos2/<str:username>/',views.uploadedphotos2,name='uploadedphotos2'),
+
 
 
    path('favorite_photo/<int:id>/',views.favorite_photo,name='favorite_photo'),

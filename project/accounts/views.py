@@ -1,4 +1,4 @@
-from django.http.response import HttpResponseRedirect
+from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect 
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -193,8 +193,17 @@ def uploadedphotos(request):
     photo=Photo.objects.filter(uploaded_by_id=userid)
     return render(request,"accounts/photos/uploadedphotos.html",{'photos':photo})
 
-def profile2(request):
-    seller= User.objects.get(is_staff=True)
+def uploadedphotos2(request,username):
+    user= User.objects.get(username=username)
+    userid=user.id
+
+    photo=Photo.objects.filter(uploaded_by_id=userid)
+    return render(request,"accounts/photos/uploadedphotos2.html",{'photos':photo,'user1':user})
+
+def profile2(request,username): 
+    user = User.objects.get(username=username)
+    return render(request,"accounts/profile2.html",{'user1':user})
+    
 
 def favorite_photo(request,id):
     photo= get_object_or_404(Photo,id=id)
