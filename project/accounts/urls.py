@@ -12,7 +12,7 @@ urlpatterns = [
 	path('login/', views.loginPage, name="login"),  
 	path('logout/', views.logoutUser, name="logout"),
 
-    path('', views.home, name="home"),
+    path('home/', views.home, name="home"),
 
 	path('', views.gallery, name='gallery'),
     path('photo/<str:pk>/', views.viewPhoto, name='photo'),
@@ -33,6 +33,23 @@ urlpatterns = [
 
 	path('success/', views.success, name="success"),
 
+	path('seller',views.seller,name="seller"),
+
+    path('profile',views.profile,name='profile'),
+	path('profile2/<str:username>/',views.profile2,name='profile2'),
+
+	path('uploadedphotos',views.uploadedphotos,name='uploadedphotos'),
+	path('uploadedphotos2/<str:username>/',views.uploadedphotos2,name='uploadedphotos2'),
+
+	path('follow/<str:username>',views.follow,name='follow'),
+	path('unfollow',views.unfollow,name='unfollow'),
+	path('following',views.following,name='following'),
+
+
+
+
+   path('favorite_photo/<int:id>/',views.favorite_photo,name='favorite_photo'),
+   path('photo_favorite_list',views.photo_favorite_list,name='photo_favorite_list'),
      
 
 ]

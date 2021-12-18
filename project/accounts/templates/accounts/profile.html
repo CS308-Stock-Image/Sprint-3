@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+</head>
+<body>
+    {%  include 'accounts/navbar.html' %}
+    {% block body %}
+
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">User Panel</h3>
+                        </div>
+                        <div class="aside">
+                        <ul class="list-links">
+                            <tr>
+                                {%if user.is_staff%}
+                                <td class="text-left"><a href="/uploadedphotos">Uploaded Photos</a></td>
+                                {%endif%}
+                            </tr>
+                            <tr>
+                                <td class="text-left"><a href>Purchased Photos</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><a href='/photo_favorite_list'>Favorites</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left"><a href="/following">Following</a></td>
+                            </tr>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">User Profile </h3>
+                        </div>
+                    </div>
+                     <table class="shopping-cart-table table">
+                        <tr>
+                            <th class="text-left">Username</th>
+                            <td class="text-left">{{ user.username}} </td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Email</th>
+                            <td class="text-left">{{ user.email}}</td>
+                        </tr>
+                        
+
+                    </table>
+                </div>
+
+
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}
+    
+</body>
+</html>

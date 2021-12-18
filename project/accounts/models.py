@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
-from likert_field.models import LikertField
 
 
 # Create your models here.
@@ -31,6 +30,8 @@ class Photo(models.Model):
     image = models.ImageField(null=False, blank=False)
     description = models.TextField()
     price= models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    uploaded_by=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    favorite=models.ManyToManyField(User,related_name='favorite', blank=True )
     
     
     
@@ -52,6 +53,8 @@ class ShopCart(models.Model):
         return(self.product.price)
     
 
+
+
 class CheckoutAddress(models.Model):
     item = models.ForeignKey(Photo,on_delete=models.SET_NULL,null=True)
     user = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
@@ -62,3 +65,8 @@ class CheckoutAddress(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Follow(models.Model):
+    username=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    follows= models.ManyToManyField(User,related_name='follows', blank=True )
+

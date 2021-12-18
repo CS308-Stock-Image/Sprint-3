@@ -1,3 +1,4 @@
+from django.http.response import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect 
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -7,7 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
 from .forms import *
-import os
 from django.contrib.auth.decorators import login_required
 
 
@@ -17,28 +17,28 @@ from .forms import  *
 
 
 def home(request):
-	photos =Photo.objects.all()
-	context={'photos':photos}
-	return render(request, 'accounts/main.html',context)
+    user=request.user
+    userid=user.id
+    photos =Photo.objects.all()
+    context={'photos':photos,'userid':userid}
+    return render(request, 'accounts/main.html',context)
+    
 
 
 def registerPage(request):
-	if request.user.is_authenticated:
-		return redirect('home')
-	else:
-		form = CreateUserForm()
-		if request.method == 'POST':
-			form = CreateUserForm(request.POST)
-			if form.is_valid():
-				form.save()
-				user = form.cleaned_data.get('username')
-				messages.success(request, 'Account was created for ' + user)
-                
-
-				return redirect('login')
-
-		context = {'form':form}
-		return render(request, 'accounts/register.html', context)
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Account was created for ' + user)
+                return redirect('login')
+        context = {'form':form}
+        return render(request, 'accounts/register.html', context)
 
 def loginPage(request):
 	if request.user.is_authenticated:
@@ -47,7 +47,7 @@ def loginPage(request):
 		if request.method == 'POST':
 			username = request.POST.get('username')
 			password =request.POST.get('password')
-
+    
 			user = authenticate(request, username=username, password=password)
 
 			if user is not None:
@@ -110,17 +110,19 @@ def addPhoto(request):
                 description=data['description'],
                 image=image,
                 price=data['price'],
+                uploaded_by=user
             )
 
-        return redirect('gallery')
+        return redirect('home')
 
     context = {'categories': categories}
     return render(request, 'accounts/photos/add.html', context)
 
 def deletePhoto(request, id):
+    user=request.user
     photo=Photo.objects.get(id=id)
     photo.delete()
-    return redirect(request,'home')
+    return redirect('/home')
 
 
 ########            SORTING             ##########
@@ -171,6 +173,83 @@ def deletecart(request,id):
     cart = ShopCart(id)
     cart.delete()
     return redirect('shopcart')
+
+
+def seller(request):
+    user=request.user
+    user.is_staff=True
+    user.save()
+    photo = Photo.objects.all()
+    return render(request,"accounts/main.html",{'user1':user,'photos':photo})
+
+def profile(request):
+    photo= Photo.objects.all()
+    return render(request,"accounts/profile.html",{'photos':photo})
+
+def uploadedphotos(request):
+    user=request.user
+    userid=user.id
+
+    photo=Photo.objects.filter(uploaded_by_id=userid)
+    return render(request,"accounts/photos/uploadedphotos.html",{'photos':photo})
+
+def uploadedphotos2(request,username):
+    user= User.objects.get(username=username)
+    userid=user.id
+
+    photo=Photo.objects.filter(uploaded_by_id=userid)
+    return render(request,"accounts/photos/uploadedphotos2.html",{'photos':photo,'user1':user})
+
+def profile2(request,username): 
+    user = User.objects.get(username=username)
+    return render(request,"accounts/profile2.html",{'user1':user})
+    
+
+def favorite_photo(request,id):
+    photo= get_object_or_404(Photo,id=id)
+    if photo.favorite.filter(id=request.user.id).exists():
+        pass
+    else:
+        photo.favorite.add(request.user)
+    return HttpResponse('Added to Favorites')
+
+
+
+def photo_favorite_list(request):
+    user=request.user
+    favorite_photos=user.favorite.all()
+    context={'favorite_photos':favorite_photos}
+    return render(request,'accounts/favorites.html',context)
+
+def follow(request,username):
+    user1=request.user
+    user=User.objects.get(username=username)
+    follow=Follow(user1.id)
+    follow.username_id=user.id
+    follow.follows.add(user1.id)
+    follow.save()
+    following=Follow.objects.filter(id=user1.id)
+
+
+    return render(request,"accounts/follow.html",{'user1':following})
+
+def unfollow(request):
+    user1=request.user
+    follow=Follow(user1.id)
+    follow.follows.remove(user1.id)
+    follow.save()
+    following=Follow.objects.filter(id=user1.id) 
+    return render(request,"accounts/follow.html",{'user1':following})
+
+
+
+def following(request):
+    user=request.user
+    following=Follow.objects.filter(id=user.id)
+    
+    return render(request, "accounts/follow.html",{'user1':following})
+
+
 
 
 
