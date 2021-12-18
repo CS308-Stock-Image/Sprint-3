@@ -66,3 +66,7 @@ class CheckoutAddress(models.Model):
     def __str__(self):
         return self.user.username
 
+class Follow(models.Model):
+    username=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    follows= models.ManyToManyField(User,related_name='follows', blank=True )
+

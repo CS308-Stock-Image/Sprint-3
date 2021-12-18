@@ -22,7 +22,17 @@
             <!-- row -->
             <div class="row">
 
+            
+
                 <div class="col-md-3">
+                   
+                    {%if user.follows%}
+                    <a href="{% url 'unfollow' %}"  class="btn btn-dark my-3">Following</a>
+
+                    {%else%}
+                    
+                    <a href="{% url 'follow' user1.username %}"  class="btn btn-dark my-3">Follow</a>
+                    {%endif%}
                     <div class="billing-details">
                         <div class="section-title">
                             <h3 class="title">User Panel</h3>
@@ -37,7 +47,7 @@
                                 <td class="text-left"><a href>Favorites</a></td>
                             </tr>
                             <tr>
-                                <td class="text-left"><a href>Following</a></td>
+                                <td class="text-left"><a href="#">Following</a></td>
                             </tr>
                         </ul>
                     </div>

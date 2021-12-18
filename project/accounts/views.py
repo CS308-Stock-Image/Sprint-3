@@ -208,7 +208,7 @@ def profile2(request,username):
 def favorite_photo(request,id):
     photo= get_object_or_404(Photo,id=id)
     if photo.favorite.filter(id=request.user.id).exists():
-        photo.favorite.remove(request.user)
+        pass
     else:
         photo.favorite.add(request.user)
     return HttpResponse('Added to Favorites')
@@ -220,6 +220,38 @@ def photo_favorite_list(request):
     favorite_photos=user.favorite.all()
     context={'favorite_photos':favorite_photos}
     return render(request,'accounts/favorites.html',context)
+
+def follow(request,username):
+    user1=request.user
+    user=User.objects.get(username=username)
+    follow=Follow(user1.id)
+    follow.username_id=user.id
+    follow.follows.add(user1.id)
+    follow.save()
+    following=Follow.objects.filter(id=user1.id)
+
+
+    return render(request,"accounts/follow.html",{'user1':following})
+
+def unfollow(request):
+    user1=request.user
+    follow=Follow(user1.id)
+    follow.follows.remove(user1.id)
+    follow.save()
+    following=Follow.objects.filter(id=user1.id) 
+    return render(request,"accounts/follow.html",{'user1':following})
+
+
+
+def following(request):
+    user=request.user
+    following=Follow.objects.filter(id=user.id)
+    
+    return render(request, "accounts/follow.html",{'user1':following})
+
+
+
+
 
 #######         CHECKOUT            ########
 
