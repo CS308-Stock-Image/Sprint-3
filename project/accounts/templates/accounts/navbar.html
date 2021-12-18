@@ -1,4 +1,4 @@
-  
+
 {% load static %}
 
 
@@ -30,6 +30,13 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/profile">Profile</a>
+      </li>
+      <li>
+        <form action="/search" method="post">
+          {% csrf_token %}
+          <input id="query" name="query" class="input search-input" type="text" placeholder="Enter your keyword">
+          <button class="search-btn"><i class="fa fa-search"></i></button>
+      </form>
       </li>
       
     </ul>

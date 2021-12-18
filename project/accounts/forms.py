@@ -15,6 +15,9 @@ class CreateUserForm(UserCreationForm):
 		model = User
 		fields = ['username', 'email', 'password1', 'password2','is_staff']
 
+class SearchForm(forms.Form):
+    query = forms.CharField(max_length=100)
+
   
 PAYMENT = (
     ('C', 'Credit Card'),

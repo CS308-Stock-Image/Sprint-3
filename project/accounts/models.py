@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.fields import related
 from django_countries.fields import CountryField
 
 
@@ -69,4 +70,6 @@ class CheckoutAddress(models.Model):
 class Follow(models.Model):
     username=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     follows= models.ManyToManyField(User,related_name='follows', blank=True )
+
+
 

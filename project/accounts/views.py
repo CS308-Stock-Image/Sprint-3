@@ -249,6 +249,26 @@ def following(request):
     
     return render(request, "accounts/follow.html",{'user1':following})
 
+def search(request):
+    if request.method == 'POST': # check post
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query'] # get form input data
+            
+            products=Photo.objects.filter(category_name=query) 
+           
+            
+            users=User.objects.filter(username=query)  
+
+            context = {'photos': products, 'query':query,'users':users}
+           
+            return render(request, 'accounts/search_photos.html', context)
+
+    return HttpResponseRedirect('/home')
+
+
+    
+
 
 
 
