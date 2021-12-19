@@ -54,6 +54,8 @@ urlpatterns = [
 
    path('favorite_photo/<int:id>/',views.favorite_photo,name='favorite_photo'),
    path('photo_favorite_list',views.photo_favorite_list,name='photo_favorite_list'),
+   path('favorite2/<str:username>',views.favorite2,name='favorite2'),
+   
 
    path('search', views.search, name='search'),
      

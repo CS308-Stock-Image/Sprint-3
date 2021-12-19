@@ -151,8 +151,9 @@ def shopcart(request):
     image=ShopCart.objects.filter()
     sum=0
     for product in image:
-         
+       
         sum+= product.price.to_decimal()
+        
 
     
     context= {"image":image,'sum':sum}
@@ -191,8 +192,9 @@ def seller(request):
     return render(request,"accounts/main.html",{'user1':user,'photos':photo})
 
 def profile(request):
+    user=request.user
     photo= Photo.objects.all()
-    return render(request,"accounts/profile.html",{'photos':photo})
+    return render(request,"accounts/profile.html",{'photos':photo,'user':user})
 
 def uploadedphotos(request):
     user=request.user
@@ -223,12 +225,20 @@ def favorite_photo(request,id):
         photo.favorite.add(request.user)
     return HttpResponseRedirect('/home')
 
+def favorite2(request,username):
+    user=User.objects.get(username=username)
+    favorite_photos=user.favorite.all()
+    context={'favorite_photos':favorite_photos,'user2':user}
+    return render(request,'accounts/favorites2.html',context)
+
+
+
 
 
 def photo_favorite_list(request):
     user=request.user
     favorite_photos=user.favorite.all()
-    context={'favorite_photos':favorite_photos}
+    context={'favorite_photos':favorite_photos,'user':user}
     return render(request,'accounts/favorites.html',context)
 
 def follow(request,username):

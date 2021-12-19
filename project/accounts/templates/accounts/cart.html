@@ -46,39 +46,51 @@
     <div class="container pt-4">
         <div class="row">
             <div class="col-md-8 cart">
-                <div class="title">
-                    <div class="row">
-                        <div class="col">
-                            <h4><b>Shopping Cart</b></h4>
-                        </div>
-                        <div class="col align-self-center text-right text-muted"></div>
-                    </div>
+                <div class="title pb-2">
+
+                    <h4><b>Shopping Cart</b></h4>
+
                 </div>
+
                 {%for photo in image%}
-                <div class="row border-top border-bottom">
+
+                <div class="row pb-1">
                     <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="../../..{{photo.product.image.url}}"></div>
+                        <div class="col-2">
+                            <img class="img-fluid" src="../../..{{photo.product.image.url}}">
+                        </div>
                         <div class="col">
                             <div class="row text-muted">{{photo.category}}</div>
                             <div class="row">{{photo.description}}</div>
                         </div>
-                        <div class="col">&#8378; {{photo.price}}<span class="close"><a
-                                    href="{%url 'deletecart' photo.id%}">&#10005;</a></span></div>
+                        <div class="col">{{photo.price}} &#8378; <span class="close" style="color: black;"><a href="{%url 'deletecart' photo.id%}"
+                                    style="color: black;">&#10005;</a></span></div>
                     </div>
                 </div>
+
                 {%endfor%}
-                <div class="col-md-5 summary" >
-                    <div>
-                        <h5><b>Summary</b></h5>
+
+            </div>
+            <div class="col-md-4 cart">
+
+                <div class="card">
+                    <div class="col-md-12 summary p-3" >
+                        <div>
+                            <h5><b>Summary</b></h5>
+                        </div>
+                        <hr style="color:black">
+                       
+                        <hr style="color:black">
+
+                        <div class="row pb-3" >
+                            <div class="col">TOTAL PRICE</div>
+                            <div class="col text-right">&#8378; {{sum}}</div>
+                        </div>
+                        <a href="/get"><button class="w-100 btn btn-primary btn"
+                                type="submit">CHECKOUT</button></a>
                     </div>
-                    <hr style="color:black">
-                
-                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                        <div class="col">TOTAL PRICE</div>
-                        <div class="col text-right">&#8378;{{sum}} </div>
-                    </div>
-                    <a href="/get"><button class="w btn btn-primary btn" type="submit">CHECKOUT</button></a>
                 </div>
+
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"
