@@ -196,15 +196,14 @@ def uploadedphotos(request):
 def uploadedphotos2(request,username):
     user= User.objects.get(username=username)
     userid=user.id
-
     photo=Photo.objects.filter(uploaded_by_id=userid)
-    return render(request,"accounts/photos/uploadedphotos2.html",{'photos':photo,'user1':user})
+   
+    return render(request,"accounts/photos/uploadedphotos2.html",{'photos':photo,'user2':user})
 
 def profile2(request,username): 
     user1=request.user
-    
     user = User.objects.get(username=username)
-    return render(request,"accounts/profile2.html",{'user1':user,'user':user1})
+    return render(request,"accounts/profile2.html",{'user2':user,'user':user1})
 
     
 
@@ -234,9 +233,8 @@ def follow(request,username):
     follow.follows.add(user1.id)
     follow.save()
     following=Follow.objects.filter(id=user1.id)
-
-
     return render(request,"accounts/follow.html",{'user1':following})
+
 
 
 def unfollow(request,username):
@@ -256,6 +254,14 @@ def following(request):
     following=Follow.objects.filter(id=user.id)
     
     return render(request, "accounts/follow.html",{'user1':following})
+
+def follow2(request,username):
+    user1=request.user
+    user = User.objects.get(username=username)
+    user2=Follow.objects.filter(id=user.id)
+    
+    return render(request, "accounts/follow2.html",{'user1':user2,'user2':user})
+
 
 def search(request):
     if request.method == 'POST': # check post

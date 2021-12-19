@@ -10,6 +10,7 @@
      <title>Document</title>
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
  
      <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
  
@@ -43,13 +44,14 @@
              <div class="row">
  
                  <div class="col-md-3">
- 
+                    {% if user.is_authenticated  %}
                     {%if user1.username_id != None %}
-                    <a href="{% url 'unfollow' user1.username %}"  class="btn btn-dark my-3">Following</a>
+                    <a href="{% url 'unfollow' user2.username %}"  class="btn btn-dark my-3">Following</a>
 
                     {%else%}
                     
-                    <a href="{% url 'follow' user1.username %}"  class="btn btn-dark my-3">Follow</a>
+                    <a href="/follow/{{user2.username}}"  class="btn btn-dark my-3">Follow</a>
+                    {%endif%}
                     {%endif%}
                      <div class="billing-details">
                          <div class="section-title">
@@ -59,13 +61,13 @@
                              <ul class="list-links">
  
                                  <tr>
-                                     <td class="text-left"><a href="{% url 'uploadedphotos2' user1.username %}"> Uploaded Photos </a> </td>
+                                     <td class="text-left"><a href="/uploadedphotos2/{{user2.username}}"> Uploaded Photos </a> </td>
                                  </tr>
                                  <tr>
                                      <td class="text-left"><a href>Favorites</a></td>
                                  </tr>
                                  <tr>
-                                     <td class="text-left"><a href="#">Following</a></td>
+                                     <td class="text-left"><a href="/follow2/{{user2.username}}">Following</a></td>
                                  </tr>
                              </ul>
                          </div>
@@ -81,11 +83,11 @@
                      <table class="shopping-cart-table table">
                          <tr>
                              <th class="text-left">Username</th>
-                             <td class="text-left">{{ user1.username}} </td>
+                             <td class="text-left">{{ user2.username}} </td>
                          </tr>
                          <tr>
                              <th class="text-left">Email</th>
-                             <td class="text-left">{{ user1.email}}</td>
+                             <td class="text-left">{{ user2.email}}</td>
                          </tr>
  
  
