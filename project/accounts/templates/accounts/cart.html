@@ -1,3 +1,5 @@
+
+{% load static %}
 {% include 'accounts/navbar.html' %}
 
 <!DOCTYPE html>
@@ -70,21 +72,12 @@
                         <h5><b>Summary</b></h5>
                     </div>
                     <hr style="color:black">
-                    <div class="row">
-                        <div class="col" style="padding-left:0;"></div>
-                        <div class="col text-right">&#8378; </div>
-                    </div>
-                    <form>
-                        <p>SHIPPING</p>
-                        <select>
-                            <option class="text-muted">Standard-Delivery- &#8378;5.00</option>
-                        </select>
-                    </form>
+                
                     <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                         <div class="col">TOTAL PRICE</div>
-                        <div class="col text-right">&#8378; </div>
+                        <div class="col text-right">&#8378;{{sum}} </div>
                     </div>
-                    <a href="/checkout/get"><button class="w btn btn-primary btn" type="submit">CHECKOUT</button></a>
+                    <a href="/get"><button class="w btn btn-primary btn" type="submit">CHECKOUT</button></a>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields import related
+from django.forms.fields import BooleanField
 from django_countries.fields import CountryField
 
 
@@ -30,7 +31,7 @@ class Photo(models.Model):
     category_name=models.TextField()
     image = models.ImageField(null=False, blank=False)
     description = models.TextField()
-    price= models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    price= models.IntegerField( default=0)
     uploaded_by=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
     favorite=models.ManyToManyField(User,related_name='favorite', blank=True )
     
@@ -39,21 +40,6 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.description
-
-
-class ShopCart(models.Model):
-    user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
-    product=models.ForeignKey(Photo,on_delete=models.SET_NULL,null=True)
-    quantity=models.IntegerField(default=0)
-    
-
-    def __str__(self):
-        return self.product.title
-    @property
-    def price(self):
-        return(self.product.price)
-    
-
 
 
 class CheckoutAddress(models.Model):
@@ -66,6 +52,23 @@ class CheckoutAddress(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class ShopCart(models.Model):
+    user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    product=models.ForeignKey(Photo,on_delete=models.SET_NULL,null=True)
+    quantity=models.IntegerField(default=0)
+    ordered=BooleanField(required=False)
+    checkout_address=models.ForeignKey(CheckoutAddress,on_delete=models.SET_NULL, null=True)
+    
+
+    def __str__(self):
+        return self.product.title
+    @property
+    def price(self):
+        return(self.product.price)
+    
+
+
 
 class Follow(models.Model):
     username=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)

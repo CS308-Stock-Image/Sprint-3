@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
-
+from bson.decimal128 import Decimal128, create_decimal128_context
+import decimal
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib import messages
@@ -148,7 +149,14 @@ def sortByDecreasingPrice(request):
 
 def shopcart(request):
     image=ShopCart.objects.filter()
-    context= {"image":image}
+    sum=0
+    for product in image:
+         
+        sum+= product.price.to_decimal()
+
+    
+    context= {"image":image,'sum':sum}
+    
     return render(request,"accounts/cart.html",context)
     
 
@@ -213,7 +221,7 @@ def favorite_photo(request,id):
         pass
     else:
         photo.favorite.add(request.user)
-    return HttpResponse('Added to Favorites')
+    return HttpResponseRedirect('/home')
 
 
 
@@ -296,17 +304,29 @@ def success(request):
 
 
 def get(request):
-        form = CheckoutForm()
-        context = {
-            'form': form
-        }
-        return render(request, 'accounts/checkout.html', context)
+    image=ShopCart.objects.filter()
+    sum=0
+    for product in image:
+        sum+= product.price.to_decimal()
+    form = CheckoutForm()
+    context = { 'form': form,'sum':sum}
+    return render(request, 'accounts/checkout.html', context)
+
+def purchasedphotos(request):
+    order = ShopCart.objects.filter(user=request.user)
+    for order1 in order:
+      if order1.ordered==True :
+          return render(request,"accounts/purchasedphotos.html",{'photos':order})
+
+    return render(request,"accounts/purchasedphotos.html")
+
 
 def post(request):
-        form = CheckoutForm(request.POST or None)
+        form = CheckoutForm(request.POST )
+
 
         try:
-            order = ShopCart.objects.get(user=request.user, ordered=False)
+            order = ShopCart.objects.get(user=request.user)
             if form.is_valid():
                 street_address = form.cleaned_data.get('street_address')
                 apartment_address = form.cleaned_data.get('apartment_address')
@@ -326,6 +346,7 @@ def post(request):
 
                 checkout_address.save()
                 order.checkout_address = checkout_address
+                order.ordered=True
                 order.save()
                 return redirect('account/checkout.html')
             messages.warning(request, 'Fail checkout')

@@ -1,3 +1,4 @@
+
 {% include 'accounts/navbar.html' %}
 
 
@@ -85,19 +86,21 @@
           <ul class="list-group mb-3">
 
             {%for product in shopcart%}
-
             <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <img class="my-0">{{product.image.url}}>
+              <div class="embed-responsive embed-responsive-1by1">
+                <img class="card-img-top embed-responsive-item" src="/media/avatar.jpeg" alt="Avatar">
               </div>
-              <span class="text-muted">{{product.price}}</span>
-            </li>
+              <div class="d-flex allign-items-center">
+                <span class="align-middle">{{sum}}<span>
 
+              </div>
+              
+            </li>
             {%endfor%}
 
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (TL)</span>
-              <strong>$20</strong>      <!---total price  lazım-->
+              <strong>{{sum}}</strong>      <!---total price  lazım-->
             </li>
 
             <a href="/success"><button class="w-100 btn btn-primary btn-lg mt-4" type="submit">Continue to checkout</button></a>

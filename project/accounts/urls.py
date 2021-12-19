@@ -17,7 +17,7 @@ urlpatterns = [
 	path('', views.gallery, name='gallery'),
     path('photo/<str:pk>/', views.viewPhoto, name='photo'),
     path('add/', views.addPhoto, name='add'),
-	path('deletePhoto/<int:pk>/',views.deletePhoto, name='deletePhoto'),
+	path('deletePhoto/<int:id>/',views.deletePhoto, name='deletePhoto'),
 
 	path('sortByCategory',views.sortByCategory,name='sortByCategory'),
     path('sortByIncreasingPrice',views.sortByIncreasingPrice,name='sortByIncreasingPrice'),
@@ -28,8 +28,8 @@ urlpatterns = [
 	path('deletecart/<int:id>',views.deletecart, name='deletecart'),
 
 
-	path('checkout/get',views.get,name="checkout/get"),
-	path('checkout/post',views.post,name="checkout/post"),
+	path('get',views.get,name="checkout/get"),
+	path('post',views.post,name="checkout/post"),
 
 	path('success/', views.success, name="success"),
 
@@ -45,6 +45,8 @@ urlpatterns = [
 	path('unfollow/<str:username>/',views.unfollow,name='unfollow'),
 	path('following',views.following,name='following'),
 	path('follow2/<str:username>/',views.follow2 ,name='follow2'),
+
+	path('purchasedphotos',views.purchasedphotos,name='purchasedphotos'),
 
 
 
