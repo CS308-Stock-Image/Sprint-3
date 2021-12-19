@@ -9,27 +9,42 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 
     <style>
-    .parallax {
-        /* The image used */
-        background-color: #DCDCDC;
+        .avatar {
+        vertical-align: middle;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        }
+        .parallax {
+            /* The image used */
+            background-color: #DCDCDC;
 
-        /* Set a specific height */
-        min-height: 500px;
+            /* Set a specific height */
+            min-height: 500px;
 
-        /* Create the parallax scrolling effect */
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
+            /* Create the parallax scrolling effect */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .table tr th {
+            border-color: black;
+        }
+        .table tr td {
+            border-color: black;
+        }
     </style>
 </head>
 
 <body class="parallax">
+
     {% include 'accounts/navbar.html' %}
     {% block body %}
 
@@ -37,37 +52,42 @@
     <!-- section -->
     <div class="section">
         <!-- container -->
-        <div class="container">
+        <div class="container pt-5">
             <!-- row -->
             <div class="row">
 
                 <div class="col-md-3">
 
-                    {%if user.follows%}
-                    <a href="{% url 'unfollow' %}" class="btn btn-dark my-3">Following</a>
-
-                    {%else%}
-
-                    <a href="{% url 'follow' user1.username %}" class="btn btn-dark my-3">Follow</a>
-                    {%endif%}
-                    <div class="billing-details">
-                        <div class="section-title">
+                    <div class="col-md">
+                        <div class=" d-flex justify-content-start pb-3">
+                            <img src="/media/avatar.jpeg" alt="Avatar" class="avatar">
+                        </div>
+                        <div class="section-title ms-auto pt-2">
                             <h3 class="title">User Panel</h3>
                         </div>
-                        <div class="aside">
-                            <ul class="list-links">
+                        <div>
+                            <div>
 
-                                <tr>
-                                    <td class="text-left"><a href="{% url 'uploadedphotos2' user1.username %}"> Uploaded Photos </a> </td>
-                                </tr>
-                                <tr>
+                                <div>
+                                    <td class="text-left"><a href="/uploadedphotos2/{{user2.username}}"> Uploaded Photos</a> </td>
+                                </div>
+                                <div>
                                     <td class="text-left"><a href>Favorites</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-left"><a href="#">Following</a></td>
-                                </tr>
-                            </ul>
+                                </div>
+                                <div>
+                                    <td class="text-left"><a href="/follow2/{{user2.username}}">Following</a></td>
+                                </div>
+                            </div>
                         </div>
+                        {% if user.is_authenticated %}
+                        {%if user1.username_id != None %}
+                        <a href="{% url 'unfollow' user2.username %}" class="btn btn-dark my-3">Following</a>
+
+                        {%else%}
+
+                        <a href="/follow/{{user2.username}}" class="btn btn-dark my-3">Follow</a>
+                        {%endif%}
+                        {%endif%}
                     </div>
                 </div>
 
@@ -80,11 +100,11 @@
                     <table class="shopping-cart-table table">
                         <tr>
                             <th class="text-left">Username</th>
-                            <td class="text-left">{{ user1.username}} </td>
+                            <td class="text-left">{{ user2.username}} </td>
                         </tr>
                         <tr>
                             <th class="text-left">Email</th>
-                            <td class="text-left">{{ user1.email}}</td>
+                            <td class="text-left">{{ user2.email}}</td>
                         </tr>
 
 

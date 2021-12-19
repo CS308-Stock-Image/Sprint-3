@@ -24,40 +24,25 @@
 </head>
 
 <body >
-    {%  include 'accounts/profile.html' %}
-    
-        
+    {%  include 'accounts/profile2.html' %}
+            
 
             <div class="col-md-9 offset-3">
                
-                <div class="row d-flex justify-content-center">
+                <div class="row justify-content-center">
 
-                    {% for photo in photos  %}
-                    <div class="col-md-4">
-                        <div class="card my-2">
-                            <img class="image-thumbail" src="{{photo.image.url}}" alt="Card image cap">
 
-                            <div class="card-body">
-                              
-                                <small>Category: {{photo.category.name}}</small>
-                            </div>
-                            <div class="card-body">
-                                <small>Price: {{photo.price}}</small>
-                            </div>
-                            <a href="{% url 'photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1">View</a>
-                            {%if user.is_staff%}
-                            <a href="{% url 'deletePhoto' photo.id %}"class="btn btn-outline-dark btn-sm m-1">Delete</a>
-                            {%endif%}
-                            <a href="{% url 'addtoshopcart' photo.id %}" class="btn btn-primary btn-sm m-1">Add To Cart</a>
-                      
-                            
-                        </div>
-                    </div>
+                    {% for user in user1 %}
 
+
+                    <h3>{{user.username}}</h3>
+
+                    
                     {%empty%}
                     <div>
-                        <h3>No Uploaded Photos Found</h3>
+                        <h3>No Following People Found</h3>
                     </div>
+                    
                 
                     {% endfor %}
                     
