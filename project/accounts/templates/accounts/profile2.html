@@ -26,8 +26,8 @@
 
                 <div class="col-md-3">
                    
-                    {%if user.follows%}
-                    <a href="{% url 'unfollow' %}"  class="btn btn-dark my-3">Following</a>
+                    {%if user1.username_id != None %}
+                    <a href="{% url 'unfollow' user1.username %}"  class="btn btn-dark my-3">Following</a>
 
                     {%else%}
                     

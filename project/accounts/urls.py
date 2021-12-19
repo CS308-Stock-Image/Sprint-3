@@ -41,8 +41,8 @@ urlpatterns = [
 	path('uploadedphotos',views.uploadedphotos,name='uploadedphotos'),
 	path('uploadedphotos2/<str:username>/',views.uploadedphotos2,name='uploadedphotos2'),
 
-	path('follow/<str:username>',views.follow,name='follow'),
-	path('unfollow',views.unfollow,name='unfollow'),
+	path('follow/<str:username>/',views.follow,name='follow'),
+	path('unfollow/<str:username>/',views.unfollow,name='unfollow'),
 	path('following',views.following,name='following'),
 
 

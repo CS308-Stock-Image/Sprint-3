@@ -201,8 +201,11 @@ def uploadedphotos2(request,username):
     return render(request,"accounts/photos/uploadedphotos2.html",{'photos':photo,'user1':user})
 
 def profile2(request,username): 
+    user1=request.user
+    
     user = User.objects.get(username=username)
-    return render(request,"accounts/profile2.html",{'user1':user})
+    return render(request,"accounts/profile2.html",{'user1':user,'user':user1})
+
     
 
 def favorite_photo(request,id):
@@ -224,8 +227,10 @@ def photo_favorite_list(request):
 def follow(request,username):
     user1=request.user
     user=User.objects.get(username=username)
-    follow=Follow(user1.id)
+    follow=Follow()
+    follow.username=user
     follow.username_id=user.id
+    follow.id=user1.id
     follow.follows.add(user1.id)
     follow.save()
     following=Follow.objects.filter(id=user1.id)
@@ -233,8 +238,11 @@ def follow(request,username):
 
     return render(request,"accounts/follow.html",{'user1':following})
 
-def unfollow(request):
+
+def unfollow(request,username):
     user1=request.user
+    user=User.objects.get(username=username)
+    
     follow=Follow(user1.id)
     follow.follows.remove(user1.id)
     follow.save()
@@ -256,12 +264,14 @@ def search(request):
             query = form.cleaned_data['query'] # get form input data
             
             products=Photo.objects.filter(category_name=query) 
-           
             
-            users=User.objects.filter(username=query)  
+            
+            if products not in Photo.objects.filter(category_name=query) :
+               users=User.objects.filter(username=query)  
 
-            context = {'photos': products, 'query':query,'users':users}
-           
+               context = {'photos': products, 'query':query,'users':users}
+            else:
+              context = {'photos': products, 'query':query}
             return render(request, 'accounts/search_photos.html', context)
 
     return HttpResponseRedirect('/home')
