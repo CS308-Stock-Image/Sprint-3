@@ -11,15 +11,30 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
+	<style>
+	.parallax {
+		/* The image used */
+		background-color: #DCDCDC;
 
+		/* Set a specific height */
+		min-height: 500px;
+
+		/* Create the parallax scrolling effect */
+		background-attachment: fixed;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	
+	</style>
 
 </head>
-<body>
+<body class="parallax">
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
-				<div class="d-flex justify-content-center">
-					<h3 id="form-title">REGISTER ACCOUNT</h3>
+				<div class="d-flex justify-content-center " >
+					<h3 class="text-dark" id="form-title" >REGISTER ACCOUNT</h3>
 				</div>
 				<div class="d-flex justify-content-center form_container">
 

@@ -8,7 +8,8 @@
     <title>Gallery</title>
 
     <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <style>
         .image-thumbail {
@@ -23,52 +24,52 @@
     </style>
 </head>
 
-<body >
-    
+<body>
 
-            <div class="col-md-9">
-                <div class= "row">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Sort
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="/sortByCategory">Sort by category</a>
-                          <a class="dropdown-item" href="/sortByIncreasingPrice">Sort by increasing order of price</a>
-                          <a class="dropdown-item" href="/sortByDecreasingPrice">Sort by decreasing order of price</a>
-                        </div>
-                      </div>
-
-                </div>
-                <div class="row">
-
-                    {% for photo in photos  %}
-                    <div class="col-md-4">
-                        <div class="card my-2">
-                            <img class="image-thumbail" src="{{photo.image.url}}" alt="Card image cap">
-
-                            <div class="card-body">
-                              
-                                <small>Category: {{photo.category.name}}</small>
-                            </div>
-                            <div class="card-body">
-                                <small>Price: {{photo.price}}</small>
-                            </div>
-                            <a href="{% url 'photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1">View</a>
-                            <a href="{% url 'favorite_photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1">Add to Favorites</a>
-                            <a href="{% url 'addtoshopcart' photo.id %}" class="btn btn-primary btn-sm m-1">Add To Cart</a>
-                      
-                            
-                        </div>
+    <div class="container-fluid pt-4">
+        <div class="col-md-11">
+            <div class="row d-flex justify-content-end">
+                <div class="dropdown ms-auto">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/sortByCategory">Sort by category</a>
+                        <a class="dropdown-item" href="/sortByIncreasingPrice">Sort by increasing order of price</a>
+                        <a class="dropdown-item" href="/sortByDecreasingPrice">Sort by decreasing order of price</a>
                     </div>
-                
-                    {% endfor %}
-                    
                 </div>
+        
+            </div>
+            <div class="row">
+        
+                {% for photo in photos %}
+                <div class="col-md-4">
+                    <div class="card my-2">
+                        <img class="image-thumbail" src="{{photo.image.url}}" alt="Card image cap">
+        
+                        <div class="card-body">
+        
+                            <small>Category: {{photo.category.name}}</small>
+                        </div>
+                        <div class="card-body">
+                            <small>Price: {{photo.price}}</small>
+                        </div>
+                        <a href="{% url 'photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1">View</a>
+                        <a href="{% url 'favorite_photo' photo.id %}" class="btn btn-outline-dark btn-sm m-1">Add to
+                            Favorites</a>
+                        <a href="{% url 'addtoshopcart' photo.id %}" class="btn btn-primary btn-sm m-1">Add To Cart</a>
+        
+        
+                    </div>
+                </div>
+        
+                {% endfor %}
+        
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
