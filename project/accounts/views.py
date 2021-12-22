@@ -248,7 +248,7 @@ def follow(request,username):
     follow.username=user
     follow.username_id=user.id
     follow.id=user1.id
-    follow.follows.add(user1.id)
+    follow.follows.add(user.id)
     follow.save()
     following=Follow.objects.filter(id=user1.id)
     return render(request,"accounts/follow.html",{'user1':following})
@@ -331,37 +331,3 @@ def purchasedphotos(request):
     return render(request,"accounts/purchasedphotos.html")
 
 
-def post(request):
-        form = CheckoutForm(request.POST )
-
-
-        try:
-            order = ShopCart.objects.get(user=request.user)
-            if form.is_valid():
-                street_address = form.cleaned_data.get('street_address')
-                apartment_address = form.cleaned_data.get('apartment_address')
-                country = form.cleaned_data.get('country')
-                zip = form.cleaned_data.get('zip')
-                same_billing_address = form.cleaned_data.get('same_billing_address')            ####
-                save_info = form.cleaned_data.get('save_info')                                  ####
-                payment_option = form.cleaned_data.get('payment_option')                        ####
-
-                checkout_address = CheckoutAddress(
-                    user=request.user,
-                    street_address=street_address,
-                    apartment_address=apartment_address,
-                    country=country,
-                    zip=zip
-                )
-
-                checkout_address.save()
-                order.checkout_address = checkout_address
-                order.ordered=True
-                order.save()
-                return redirect('account/checkout.html')
-            messages.warning(request, 'Fail checkout')
-            return redirect('account/checkout.html')
-
-        except:
-            messages.error(request, 'You do not have an order')
-            return redirect('accounts/gallery.html')

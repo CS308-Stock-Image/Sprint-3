@@ -31,7 +31,7 @@ class Photo(models.Model):
     category_name=models.TextField()
     image = models.ImageField(null=False, blank=False)
     description = models.TextField()
-    price= models.IntegerField( default=0)
+    price= models.DecimalField( max_digits=5,decimal_places=2, default=0)
     uploaded_by=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
     favorite=models.ManyToManyField(User,related_name='favorite', blank=True )
     
@@ -54,25 +54,25 @@ class CheckoutAddress(models.Model):
         return self.user.username
 
 class ShopCart(models.Model):
+    
     user=models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
     product=models.ForeignKey(Photo,on_delete=models.SET_NULL,null=True)
     quantity=models.IntegerField(default=0)
-    ordered=BooleanField(required=False)
+    ordered=BooleanField(required=True)
     checkout_address=models.ForeignKey(CheckoutAddress,on_delete=models.SET_NULL, null=True)
     
 
-    def __str__(self):
-        return self.product.title
     @property
     def price(self):
         return(self.product.price)
     
 
 
-
 class Follow(models.Model):
     username=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     follows= models.ManyToManyField(User,related_name='follows', blank=True )
+
+
 
 
 
